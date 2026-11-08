@@ -74,8 +74,4 @@ func main() {
 	john.ShowBalance()
 	bob.ShowBalance()
 	jack.ShowBalance()
-
-	john.ShowBalance()
-	bob.ShowBalance()
-	jack.ShowBalance()
 }
