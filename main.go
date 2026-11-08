@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 
+	"github.com/lourq/bank/payment"
 	"github.com/lourq/bank/user"
 )
 
@@ -36,4 +37,25 @@ func main() {
 	bob.ShowBalance()
 
 	// Part 2
+	fmt.Println()
+	fmt.Println()
+	fmt.Println()
+
+	ps := &payment.PaymentSystem{
+		Users:            map[string]*user.User{},
+		TransactionQueue: []payment.Transaction{},
+	}
+
+	ps.AddUser(john)
+	ps.AddUser(jack)
+	ps.AddUser(bob)
+
+	ps.AddTransaction(john.ID, bob.ID, 50)
+	ps.AddTransaction(john.ID, jack.ID, 20)
+	ps.AddTransaction(john.ID, jack.ID, 120)
+	ps.ProcessingTransactions()
+	john.ShowBalance()
+	bob.ShowBalance()
+	jack.ShowBalance()
+
 }

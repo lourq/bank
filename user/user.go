@@ -7,14 +7,14 @@ import (
 
 type User struct {
 	ID, Name string
-	Balance  float32
+	Balance  float64
 }
 
-func (u *User) Deposit(sum float32) {
+func (u *User) Deposit(sum float64) {
 	u.Balance += sum
 }
 
-func (u *User) Withdraw(sum float32) error {
+func (u *User) Withdraw(sum float64) error {
 	if u.Balance < sum {
 		return errors.New("You don't have enough money")
 	}
