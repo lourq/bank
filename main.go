@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"sync"
 
 	"github.com/lourq/bank/payment"
 	"github.com/lourq/bank/user"
@@ -75,40 +74,6 @@ func main() {
 	john.ShowBalance()
 	bob.ShowBalance()
 	jack.ShowBalance()
-
-	// Part 3
-	fmt.Println()
-	fmt.Println("Обработка новых транзакций через канал:")
-
-	ps.TransactionQueue = nil
-	transactions := []payment.Transaction{
-		{FromID: john.ID, ToID: bob.ID, Amount: 100},
-		{FromID: bob.ID, ToID: jack.ID, Amount: 40},
-		{FromID: jack.ID, ToID: john.ID, Amount: 15},
-		{FromID: john.ID, ToID: jack.ID, Amount: 200},
-		{FromID: jack.ID, ToID: bob.ID, Amount: 75},
-		{FromID: bob.ID, ToID: john.ID, Amount: 30},
-		{FromID: "unknown", ToID: john.ID, Amount: 10},
-		{FromID: john.ID, ToID: "unknown", Amount: 10},
-		{FromID: john.ID, ToID: bob.ID, Amount: 1_000_000},
-		{FromID: john.ID, ToID: bob.ID, Amount: 5},
-	}
-	for _, t := range transactions {
-		ps.AddTransaction(t)
-	}
-
-	var wg sync.WaitGroup
-	ch := make(chan payment.Transaction, len(ps.TransactionQueue))
-
-	wg.Add(1)
-	go ps.Worker(ch, &wg)
-
-	for _, t := range ps.TransactionQueue {
-		ch <- t
-	}
-
-	close(ch)
-	wg.Wait()
 
 	john.ShowBalance()
 	bob.ShowBalance()

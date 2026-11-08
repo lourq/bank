@@ -3,7 +3,6 @@ package payment
 import (
 	"errors"
 	"fmt"
-	"sync"
 
 	u "github.com/lourq/bank/user"
 )
@@ -53,15 +52,4 @@ func (ps *PaymentSystem) ProcessingTransactions(t Transaction) error {
 
 	fmt.Printf("Транзакция успешно выполнена: %s -> %s, сумма: %.2f\n", t.FromID, t.ToID, t.Amount)
 	return nil
-}
-
-func (ps *PaymentSystem) Worker(ch <-chan Transaction, wg *sync.WaitGroup) {
-	defer wg.Done()
-
-	for t := range ch {
-		err := ps.ProcessingTransactions(t)
-		if err != nil {
-			fmt.Println("Ошибка при обработке транзакции:", err)
-		}
-	}
 }
