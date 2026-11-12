@@ -48,14 +48,13 @@ func main() {
 	bob.Deposit(100)
 	bob.ShowBalance()
 
-	john.Deposit(50000)
-	bob.Deposit(50000)
-	jack.Deposit(50000)
-
 	// Part 2
 	fmt.Println()
 	fmt.Println()
-	fmt.Println()
+
+	john.Deposit(50000)
+	bob.Deposit(50000)
+	jack.Deposit(50000)
 
 	ps := &payment.PaymentSystem{
 		Users:            map[string]*user.User{},
@@ -80,7 +79,8 @@ func main() {
 		Amount: 10})
 
 	for _, t := range ps.TransactionQueue {
-		ps.ProcessingTransactions(t)
+		err := ps.ProcessingTransactions(t)
+		checkErr(err)
 	}
 
 	john.ShowBalance()
