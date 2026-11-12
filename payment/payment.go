@@ -29,7 +29,7 @@ func (ps *PaymentSystem) AddTransaction(t Transaction) {
 func (ps *PaymentSystem) ProcessingTransactions(t Transaction) error {
 	check := func(ok bool) error {
 		if !ok {
-			return errors.New("пользователь с таким ID не найден")
+			return errors.New("User not found")
 		}
 		return nil
 	}
