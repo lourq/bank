@@ -27,5 +27,8 @@ func (u *User) Withdraw(sum float64) error {
 }
 
 func (u *User) ShowBalance() {
+	defer u.mu.Unlock()
+	u.mu.Lock()
+
 	fmt.Printf("Имя : %s | Баланс: %.2f\n", u.Name, u.Balance)
 }
