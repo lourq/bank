@@ -25,7 +25,7 @@ func (u *User) Withdraw(sum float64) error {
 	u.mu.Lock()
 
 	if u.Balance < sum {
-		return errors.New("У вас недостаточно денег")
+		return errors.New("No enough funds on the account")
 	}
 
 	u.Balance -= sum
@@ -35,5 +35,5 @@ func (u *User) Withdraw(sum float64) error {
 }
 
 func (u *User) ShowBalance() {
-	fmt.Printf("Имя : %s | Баланс : %.2f\n", u.Name, u.Balance)
+	fmt.Printf("Имя : %s | Баланс: %.2f\n", u.Name, u.Balance)
 }
