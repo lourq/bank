@@ -111,8 +111,10 @@ func main() {
 	var wg sync.WaitGroup
 	ch := make(chan payment.Transaction, len(ps.TransactionQueue))
 
-	wg.Add(1)
-	go ps.Worker(ch, &wg)
+	for range 5 {
+		wg.Add(1)
+		go ps.Worker(ch, &wg)
+	}
 
 	for _, t := range ps.TransactionQueue {
 		ch <- t
